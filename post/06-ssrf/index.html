@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>SDL流程 | liuyuan1002</title>
+<title>06 - SSRF | liuyuan1002</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -18,7 +18,18 @@
 
 
 
-    <meta name="description" content="温故而知新">
+    <meta name="description" content="0x00 原理
+即服务器端请求伪造
+危害：
+1. 内外网端口扫描
+2. 内网主机敏感信息
+3. 对通过HTTP方式内网web发起进攻
+4. 与XXE组成攻击链
+5.  攻击内网程序，例如redis未授权
+0x01 攻击点
+漏洞点：
+1. 通..." />
+    <meta name="keywords" content="" />
   </head>
   <body>
     <div id="app" class="main">
@@ -88,43 +99,59 @@
 
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
-          <h2 class="current-tag">标签: SDL流程</h2>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://liuyuan1002.github.io/post/dai-ma-sao-miao-xiang-guan/">
-                  <h2 class="post-title">05 - 代码扫描相关</h2>
-                </a>
-                <div class="post-date">
-                  2021-04-28
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://liuyuan1002.github.io/post/00-sdl-liu-cheng-zong-lan/">
-                  <h2 class="post-title">00 - SDL流程总览</h2>
-                </a>
-                <div class="post-date">
-                  2021-04-28
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
+          <div class="post-detail">
+            <h2 class="post-title">06 - SSRF</h2>
+            <div class="post-date">2020-03-27</div>
+            
+            <div class="post-content" v-pre>
+              <h2 id="0x00-原理">0x00 原理</h2>
+<p>即服务器端请求伪造</p>
+<p>危害：<br>
+1. 内外网端口扫描<br>
+2. 内网主机敏感信息<br>
+3. 对通过HTTP方式内网web发起进攻<br>
+4. 与XXE组成攻击链<br>
+5.  攻击内网程序，例如redis未授权</p>
+<h2 id="0x01-攻击点">0x01 攻击点</h2>
+<p>漏洞点：<br>
+1. 通过URL分享内容<br>
+2. 文件处理、编码处理、转码等服务<br>
+3. 通过URL地址把原地址的网页内容调优使其适合手机屏幕浏览<br>
+4. 在线翻译 通过URL地址加载与下载图片<br>
+5.图片、文章的收藏<br>
+6. 设置邮件接收服务器<br>
+7. 从URL关键字寻找 share、wap、url、link、src、source、target、u、3g、display、sourceURl、imageURL、domain...</p>
+<h2 id="0x02-攻击方式">0x02 攻击方式</h2>
+<p>gopher ：   https://xz.aliyun.com/t/5844<br>
+绕过： 127.0.0.1IP           被禁用<br>
+1.  八进制、16进制。127.0.0.1甚至可以缩写为127.1<br>
+2. url解析 baidu.com@127.0.0.1  其实就是请求127.0.0.1<br>
+3. xip.io 利用302跳转<br>
+4. 句号  127。0。0。1<br>
+5. 短地址</p>
+<h2 id="0x03-防御">0x03 防御</h2>
+<pre><code>1. 返回展示前，先检查数据是否符合标准
+2. 统一错误信息
+3. 限制请求的端口为http常用的端口，比如，80,443,8080,8090。
+4. 黑名单内网ip。避免应用被用来获取获取内网数据，攻击内网。
+5. 禁用不需要的协议。仅仅允许http和https请求。可以防止类似于file:///,gopher://,ftp:// 等引起的问题</code></pre>
 
-          <div class="pagination-container">
-  
-  
-</div>
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://liuyuan1002.github.io/post/05-csrf/">
+                  <h3 class="post-title">
+                    05 - CSRF
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
 
         </div>
       </div>

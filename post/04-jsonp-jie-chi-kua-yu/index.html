@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>SDL流程 | liuyuan1002</title>
+<title>04 - JSONP 劫持跨域 | liuyuan1002</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -18,7 +18,11 @@
 
 
 
-    <meta name="description" content="温故而知新">
+    <meta name="description" content="0x00 原理
+Jsonp(JSON with Padding) 是 json 的一种&quot;使用模式&quot;，可以让网页从别的域名（网站）那获取资料，即跨域读取数据。
+同源策略限制无法跨域
+浏览器：同协议、同主机、同域名（同二级域..." />
+    <meta name="keywords" content="web安全" />
   </head>
   <body>
     <div id="app" class="main">
@@ -88,43 +92,47 @@
 
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
-          <h2 class="current-tag">标签: SDL流程</h2>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://liuyuan1002.github.io/post/dai-ma-sao-miao-xiang-guan/">
-                  <h2 class="post-title">05 - 代码扫描相关</h2>
-                </a>
-                <div class="post-date">
-                  2021-04-28
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://liuyuan1002.github.io/post/00-sdl-liu-cheng-zong-lan/">
-                  <h2 class="post-title">00 - SDL流程总览</h2>
-                </a>
-                <div class="post-date">
-                  2021-04-28
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
+          <div class="post-detail">
+            <h2 class="post-title">04 - JSONP 劫持跨域</h2>
+            <div class="post-date">2020-03-25</div>
+            
+            <div class="post-content" v-pre>
+              <h2 id="0x00-原理">0x00 原理</h2>
+<p>Jsonp(JSON with Padding) 是 json 的一种&quot;使用模式&quot;，可以让网页从别的域名（网站）那获取资料，即跨域读取数据。</p>
+<p>同源策略限制无法跨域<br>
+浏览器：同协议、同主机、同域名（同二级域名）、同端口 即为同源</p>
+<h2 id="0x01-使用">0x01 使用</h2>
+<p>script src属性用来跨域。</p>
+<h2 id="0x02-预防-corscross-origin-resource-sharing">0x02 预防 CORS(Cross-Origin Resource Sharing)</h2>
+<ol>
+<li>向API响应添加Access-Control-Allow-Origin header<br>
+Access-Control-Allow-Origin: reports.verysecurebank.ro:</li>
+</ol>
 
-          <div class="pagination-container">
-  
-  
-</div>
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://liuyuan1002.github.io/tag/Sy4C9tQAv/" class="tag">
+                    web安全
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://liuyuan1002.github.io/post/03-xsskua-zhan-jiao-ben-lou-dong/">
+                  <h3 class="post-title">
+                    03 - XSS（跨站脚本漏洞）
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
 
         </div>
       </div>

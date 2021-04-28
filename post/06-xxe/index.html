@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>01 - HTTP参数安全 | liuyuan1002</title>
+<title>07 - XXE | liuyuan1002</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -18,15 +18,11 @@
 
 
 
-    <meta name="description" content="常见漏洞类型
+    <meta name="description" content="0x00 原理
 
+https://mp.weixin.qq.com/s/jvbZ6Andk_oQEo9cXA_daQ?
 
-User-Agent BASH漏洞
-
-https://www.freebuf.com/vuls/44994.html
-
-在处理(){ 开头的函数环境变量时，并没有一函数结尾｝为结束，而是一直执行其后的shell命令
-Hos..." />
+XML External Entity，XML外部实体注入。为了使应用程序使用这些自定义的XML消息，应用程序必须去解..." />
     <meta name="keywords" content="web安全" />
   </head>
   <body>
@@ -98,56 +94,60 @@ Hos..." />
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">01 - HTTP参数安全</h2>
-            <div class="post-date">2020-03-23</div>
+            <h2 class="post-title">07 - XXE</h2>
+            <div class="post-date">2020-03-27</div>
             
             <div class="post-content" v-pre>
-              <h2 id="常见漏洞类型">常见漏洞类型</h2>
+              <h2 id="0x00-原理">0x00 原理</h2>
+<blockquote>
+<p>https://mp.weixin.qq.com/s/jvbZ6Andk_oQEo9cXA_daQ?</p>
+</blockquote>
+<p>XML External Entity，XML外部实体注入。为了使应用程序使用这些自定义的XML消息，应用程序必须去解析XML文档并检查格式是否正确。如果应用是通过用户上传处理XML文件或POST请求的，那么很有可能会受到XXE攻击。<br>
+<strong>危害：</strong><br>
+当允许引用外部实体时，通过构造恶意内容，可导致读取任意文件、执行系统命令、探测内网端口、攻击内网网站等危害。</p>
+<h2 id="0x01-xml原理">0x01 XML原理</h2>
+<p>（1）内部的 DOCTYPE 声明</p>
+<!DOCTYPE 根元素 [元素声明]>
+<p>（2）外部文档声明</p>
+<!DOCTYPE 根元素 SYSTEM ”文件名”>
 <ol>
-<li>
-<p>User-Agent BASH漏洞</p>
-<blockquote>
-<p>https://www.freebuf.com/vuls/44994.html</p>
-</blockquote>
-<p>在处理(){ 开头的函数环境变量时，并没有一函数结尾｝为结束，而是一直执行其后的shell命令</p>
-<pre><code>Host: **.**.**.**
-User-Agent: () { :;}; echo `/bin/cat /etc/passwd`
-Accept:   text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8 
-</code></pre>
-</li>
-<li>
-<p>User-Agent SQL注入 ,WooYun-2016-0184092</p>
-<blockquote>
-<p>https://www.uedbox.com/post/12630/</p>
-</blockquote>
-</li>
-<li>
-<p>X-Forwarded-For伪造 ，绕开IP限制</p>
-</li>
-<li>
-<p>IIS WEBDAV 默认开启了DELETE、PUT等方法。<br>
-当有IIS配置有写入权限时。就可以直接上传文件。</p>
-</li>
-<li>
-<p>Tomcat 文件上传漏洞。<br>
-CVE-2017-12615。Tomcat 7.0.0 to 7.0.79 。开启puts方法时.</p>
-</li>
-<li>
-<p>cookie注入</p>
-</li>
-<li>
-<p>CRLF注入   %0d%0a<br>
-HTTP Header与HTTP Body是通过两个CRLF分隔， 而浏览器是根据这两个CRLF来取出HTTP 内容并显示出来。攻击者一旦能够控制HTTP 消息头中的字符，注入一些恶意的换行，这就能注入一些会话Cookie或者HTML代码。</p>
-</li>
-<li>
-<p>修改返回包状态码。跳过认证。</p>
-<blockquote>
-<p>http://ip/siteserver/cms/background_templateAdd.aspxPublishmentSystemID=1</p>
-</blockquote>
-<pre><code>  SiteServer CMS可通过修改返回状态码进入模板页面。
-  在模板添加页面。通过修改返回注册码、删除返回包的JS代码方式，注入一句话木马。即可通过菜刀访问ss</code></pre>
-</li>
+<li>DTD 实体<br>
+内部实体申明  <!ENTITY 实体名称 “值”><br>
+外部实体申明   <!ENTITY 实体名称 “URL”><br>
+参数实体申明  <!ENTITY %实体名称 “值”>  <!ENTITY %实体名称 “URL”></li>
 </ol>
+<h2 id="0x02-xxe-外部实体注入">0x02 XXE -外部实体注入</h2>
+<h4 id="攻击点">攻击点</h4>
+<ol>
+<li>以XML作为数据传输</li>
+<li>OpenXML文件解析  docx、pptx\svg</li>
+<li>基于XML的数据格式 SAML 、WSDL</li>
+</ol>
+<h4 id="攻击方式分类">攻击方式分类</h4>
+<ol>
+<li>正常回显XXE</li>
+<li>报错XXE</li>
+<li>无回显XXE</li>
+</ol>
+<h4 id="攻击手段">攻击手段</h4>
+<ol>
+<li>读取任意文件  <!ENTITY f SYSTEM "file:///etc/passwd"></li>
+<li>执行系统命令  <!ENTITY f SYSTEM "expect://id"></li>
+<li>探测内网端口 <!ENTITY Quan SYSTEM "http://192.168.246.136:80"></li>
+</ol>
+<h3 id="0x03-xxe实战">0x03 XXE实战</h3>
+<ol>
+<li>PHP<br>
+（1）探测内网端口、指纹识别。通过Http协议  <!DOCTYPE user SYSTEM ”http://127.0.0.1:28895”>  
+  <!ENTITY user  “http://127.0.0.1:28895”> &user
+绕过 127.0.0.1禁用。  xip.io公用解析服务<br>
+10.0.0.1.xip.io   resolves to   10.0.0.1<br>
+www.10.0.0.1.xip.io   resolves to   10.0.0.1<br>
+mysite.10.0.0.1.xip.io   resolves to   10.0.0.1<br>
+foo.bar.10.0.0.1.xip.io   resolves to   10.0.0.1<br>
+（2）DOS 攻击，通过实体引用造成内存开销 -10^30次方的实体引用</li>
+</ol>
+<p>（3）命令执行     expect://command</p>
 
             </div>
             
@@ -159,6 +159,15 @@ HTTP Header与HTTP Body是通过两个CRLF分隔， 而浏览器是根据这两�
                 
               </div>
             
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://liuyuan1002.github.io/post/06-ssrf/">
+                  <h3 class="post-title">
+                    06 - SSRF
+                  </h3>
+                </a>
+              </div>
             
 
             

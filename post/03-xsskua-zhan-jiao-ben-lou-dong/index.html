@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>03 - XSS（跨站脚本漏洞） | liuyuan1002</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://liuyuan1002.github.io/favicon.ico?v=1619603242129">
+<link rel="stylesheet" href="https://liuyuan1002.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="0x00 原理
+
+cross site Scripting  简称 XSS.
+XSS攻击通常指的是通过利用网页开发时留下的漏洞，通过巧妙的方法注入恶意指令代码到网页，使用户加载并执行攻击者恶意制造的网页程序。这些恶意网页程序通常是JavaS..." />
+    <meta name="keywords" content="web安全" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://liuyuan1002.github.io">
+        <img src="https://liuyuan1002.github.io/images/avatar.png?v=1619603242129" class="site-logo">
+        <h1 class="site-title">liuyuan1002</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://liuyuan1002.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">03 - XSS（跨站脚本漏洞）</h2>
+            <div class="post-date">2020-03-25</div>
+            
+            <div class="post-content" v-pre>
+              <h2 id="0x00-原理">0x00 原理</h2>
+<blockquote>
+<p>cross site Scripting  简称 XSS.<br>
+XSS攻击通常指的是通过利用网页开发时留下的漏洞，通过巧妙的方法注入恶意指令代码到网页，使用户加载并执行攻击者恶意制造的网页程序。这些恶意网页程序通常是JavaScript，但实际上也可以包括Java、 VBScript、ActiveX、 Flash 或者甚至是普通的HTML。</p>
+</blockquote>
+<p><strong>危害：</strong></p>
+<ol>
+<li>JS能做的东西，都能做。</li>
+<li>对受害者可能采用cookie资料窃取 回话劫持 钓鱼欺骗等攻击手段、</li>
+<li>强制弹出广告页面 刷流量</li>
+<li>网页挂马(可看上篇文章)</li>
+<li>提升用户权限 进一步渗透网站</li>
+<li>传播跨站脚本蠕虫等</li>
+</ol>
+<h2 id="0x01-分类">0x01 分类</h2>
+<p>1、反射型XSS<br>
+非持久化，需要欺骗用户自己去点击链接才能触发XSS代码,本文主要以本类型进行介绍</p>
+<ol>
+<li>设置圈套</li>
+<li>受害者浏览恶意软件</li>
+<li>跳转至攻击对象服务器（js作为参数包含其中）</li>
+<li>攻击对象网站生成包含JS的网页</li>
+<li>JS在受害着浏览器中被执行</li>
+</ol>
+<p>可以将当前网站的cookie发送给攻击着。攻击这可以利用cookie登录网站。</p>
+<script>document.cookie</script>
+<p>2、存储型<br>
+把用户输入的数据存储在服务器端。这种XSS具有很强的稳定性。常见于留言板、文章中。</p>
+<ol>
+<li>留言板上留言中设置js</li>
+<li>管理员查看留言，直接触发JS</li>
+</ol>
+<p>3、DOM型<br>
+也是一种反射型XSS，由于历史原因被单独列出来了。通过修改页面的DOM节点形成的XSS，称之为DOMBased XSS。<br>
+常见：location.href()<br>
+xss.html#javascript:alert(11)</p>
+<h2 id="0x02-攻击方式">0x02 攻击方式</h2>
+<ol>
+<li>
+<p>标签闭合<br>
+？name=aa&quot;;alert(1);&quot;   左右标签&quot; &quot;闭合<br>
+？name=aa%df&quot;;alert(1);//  宽字节<br>
+&lt;img src=0 onerror='alert(11')&gt;</p>
+</li>
+<li>
+<p>输出到标签类型<br>
+&lt;input type=&quot;text value='$'&gt;        aa' onmouserover=prompt(11) bad'<br>
+过滤尖括号没有用</p>
+</li>
+<li>
+<p>输入到HTML事件</p>
+</li>
+<li>
+<p>编码绕过<br>
+Unicode编码 &amp;#39<br>
+URL编码<br>
+base64编码</p>
+</li>
+<li>
+<p>浏览器功能导致标签闭合<br>
+&lt;img src='aa onError=alert(1)<br>
+输入不闭合标签。导致浏览器自动闭合其他标签。</p>
+</li>
+<li>
+<p>隐藏标签XSS</p>
+</li>
+</ol>
+<h2 id="0x03-漏洞检测">0x03 漏洞检测</h2>
+<p>最重要考虑哪里有输入、输入的数据哪里会输出。</p>
+<ol>
+<li>输入敏感字符：  、&quot;  ' &lt;  &gt;  (  )提交后查看是否被转义。</li>
+<li>盲打\hackbar 中XSS playload<br>
+https://github.com/payloadbox/xss-payload-list<br>
+攻击点：</li>
+<li>URL</li>
+<li>输入框</li>
+<li>抓包重放</li>
+</ol>
+<h2 id="0x04-防御">0x04 防御</h2>
+<ol>
+<li>
+<p>输入与输出中的过滤</p>
+</li>
+<li>
+<p>黑名单与白名单</p>
+</li>
+<li>
+<p>web安全编码规范</p>
+</li>
+<li>
+<p>给开发这的终极xss防御备忘录<br>
+XSS编码：</p>
+<pre><code>     1. HTML五大元素
+     2. 编码  
+         实体编码：    如&lt; 实体编码为&amp;#60
+         JavaScript编码：  \uxxxx 
+         URL编码： %XX
+     3. 解码。 先  HTML解码对HTML文档解码，并创建DOM树。在进行URL解码，最后进行JavaScript编码
+     4. 实体解码:
+         数据状态中字符转换
+         RCDATA  &lt;textarea&gt; &lt;title&gt; 仅能容纳文本和字符应用。不容容纳元素
+         属性值解析器
+         
+     5. URL解码：
+         不能解码任何协议类型   javascript:  冒号也不能被解码
+         协议、用户名、密码必须是ASCII
+     6. JavaScript解码：
+         仅解码以下字符：
+             字符串中（in String）
+             标识符中（in identifier names）如：&lt;script&gt;\u0061\u006c\u0065\u0072\u0074(10);&lt;/script&gt;
+             控制字符中（in control characters）如：控制字符即'、&quot;、()等。
+             Unicode序列只有出现在标识符中时，才能被正常的解码解释 
+</code></pre>
+</li>
+</ol>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://liuyuan1002.github.io/tag/Sy4C9tQAv/" class="tag">
+                    web安全
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://liuyuan1002.github.io/post/02-sql-zhu-ru/">
+                  <h3 class="post-title">
+                    02 - SQL注入
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>
