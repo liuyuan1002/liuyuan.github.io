@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://liuyuan1002.github.io</id>
     <title>liuyuan1002</title>
-    <updated>2021-04-28T02:56:39.315Z</updated>
+    <updated>2021-04-28T06:42:22.112Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://liuyuan1002.github.io"/>
     <link rel="self" href="https://liuyuan1002.github.io/atom.xml"/>
@@ -11,35 +11,191 @@
     <icon>https://liuyuan1002.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, liuyuan1002</rights>
     <entry>
-        <title type="html"><![CDATA[Hello Gridea]]></title>
-        <id>https://liuyuan1002.github.io/post/hello-gridea/</id>
-        <link href="https://liuyuan1002.github.io/post/hello-gridea/">
+        <title type="html"><![CDATA[02 - SQL注入]]></title>
+        <id>https://liuyuan1002.github.io/post/02-sql-zhu-ru/</id>
+        <link href="https://liuyuan1002.github.io/post/02-sql-zhu-ru/">
         </link>
-        <updated>2018-12-11T16:00:00.000Z</updated>
-        <summary type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-<!-- more -->
-<p><a href="https://github.com/getgridea/gridea">Github</a><br>
-<a href="https://gridea.dev/">Gridea 主页</a><br>
-<a href="http://fehey.com/">示例网站</a></p>
-<h2 id="特性">特性👇</h2>
-<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
-<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
-<p>🏷️  你可以对文章进行标签分组</p>
-<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
-<p>💻  你可以在 <strong>Windows</strong>，<strong>MacOS</strong> 或 <strong>Linux</strong> 设备上使用此客户端</p>
-<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
-<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
-<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
-<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
-<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
-<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前 🏃</p>
-<p>未来，它一定会成为你离不开的伙伴</p>
-<p>尽情发挥你的才华吧！</p>
-<p>😘 Enjoy~</p>
+        <updated>2021-04-28T06:31:25.000Z</updated>
+        <content type="html"><![CDATA[<blockquote>
+<p>SQL 实战地址https://github.com/Audi-1/sqli-labs</p>
+</blockquote>
+<h2 id="0x00-原理">0x00 原理</h2>
+<blockquote>
+<p>https://github.com/hongriSec/Web-Security-Attack/blob/master/Part1/Day1/files/README.md</p>
+</blockquote>
+<p>都后台对用户输入的语句，进行拼接、并查询数据库。导致数据库内容泄露。</p>
+<h2 id="0x01-攻击方式">0x01 攻击方式</h2>
+<ol>
+<li>带内注入：<br>
+-基于错误的SQL语句<br>
+-基于联合的SQL  union all</li>
+<li>盲注。无法返回注入成功与否</li>
+<li>带外注入：</li>
+</ol>
+<h2 id="0x02-实战">0x02 实战</h2>
+<ol>
+<li>
+<p>https://www.cnblogs.com/qq3285862072/p/9439573.html<br>
+1）当输入单引号时，返回错误页面，则可能存在SQL注入<br>
+2）Url 地址中输入 http://xxx/abc.php?id= x and 1=1 页面依旧运行正常，继续进行下一步<br>
+Url 地址中继续输入 http://xxx/abc.php?id= x and 1=2 页面运行错误<br>
+则说明此 Sql 注入为数字型注入。<br>
+3）Url 地址中输入 http://xxx/abc.php?id= x' and '1'='1 页面运行正常，继续进行下一步。<br>
+Url 地址中继续输入 http://xxx/abc.php?id= x' and '1'='2 页面运行错误<br>
+1) or判断<br>
+5）xor判断<br>
+6） 减号判断<br>
+则说明此 Sql 注入为字符型注入。</p>
+</li>
+<li>
+<p>https://www.cnblogs.com/Qiuzhiyu/p/11666688.html</p>
+</li>
+<li>
+<p>搜索型  %</p>
+</li>
+<li>
+<p>盲注：<br>
+'&quot; or if(1<mark>1) sleep(5,1)<br>
+'&quot; or if(1</mark>2) sleep(5,1)</p>
+</li>
+<li>
+<p>注释<br>
+-- 这种后面有空格</p>
+<h1 id=""></h1>
+<p>/* */ 注释符号内内容</p>
+</li>
+<li>
+<p>insert注入： 报错测试 updatexml（）   extractValue（）</p>
+</li>
+<li>
+<p>update注入： updatexml（）</p>
+</li>
+<li>
+<p>delete注入： updatexml（）</p>
+</li>
+<li>
+<p>order by注入：  注入点 在代码order by之后  IF（1=1，name，price） 则存在注入。</p>
+</li>
+<li>
+<p>堆叠注入原理：  ；分号注入。后面后在自己的SQL语句</p>
+</li>
+<li>
+<p>union注入： 需要有回显，不然无法判断。</p>
+</li>
+<li>
+<p>宽字节注入：网站存在编码和数据库编码不一致。网站GBK、mysql unicode  。%df'  -&gt;%df'  -&gt;%df%5c' -&gt; 汉字'  达到闭合效果</p>
+</li>
+<li>
+<p>二次注入： 两个HTTP请求。第一个请求插入脏数据如1' 。第二个请求会把 1' 取出来时不做过滤，直接使用。<br>
+https://www.freebuf.com/articles/web/167089.html<br>
+注册 test'# 用户。修改密码时可以直接修改掉 test 密码</p>
+</li>
+</ol>
+<h2 id="0x03-防御">0x03  防御</h2>
+<ol>
+<li>过滤</li>
+<li>预编译</li>
+</ol>
+<h2 id="附实战环境搭建-sqlii-libs">附：实战环境搭建  sqlii-libs</h2>
+<pre><code> &quot;mysql_&quot;批量替换为&quot;mysqli_&quot;
+ mysqli_query($sql)   修改为    mysqli_query($con, $sql)
+ mysqli_select_db（）  参数顺序
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[01 - HTTP参数安全]]></title>
+        <id>https://liuyuan1002.github.io/post/01-http-can-shu-an-quan/</id>
+        <link href="https://liuyuan1002.github.io/post/01-http-can-shu-an-quan/">
+        </link>
+        <updated>2021-04-28T06:30:03.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="常见漏洞类型">常见漏洞类型</h2>
+<ol>
+<li>
+<p>User-Agent BASH漏洞</p>
+<blockquote>
+<p>https://www.freebuf.com/vuls/44994.html</p>
+</blockquote>
+<p>在处理(){ 开头的函数环境变量时，并没有一函数结尾｝为结束，而是一直执行其后的shell命令</p>
+<pre><code>Host: **.**.**.**
+User-Agent: () { :;}; echo `/bin/cat /etc/passwd`
+Accept:   text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8 
+</code></pre>
+</li>
+<li>
+<p>User-Agent SQL注入 ,WooYun-2016-0184092</p>
+<blockquote>
+<p>https://www.uedbox.com/post/12630/</p>
+</blockquote>
+</li>
+<li>
+<p>X-Forwarded-For伪造 ，绕开IP限制</p>
+</li>
+<li>
+<p>IIS WEBDAV 默认开启了DELETE、PUT等方法。<br>
+当有IIS配置有写入权限时。就可以直接上传文件。</p>
+</li>
+<li>
+<p>Tomcat 文件上传漏洞。<br>
+CVE-2017-12615。Tomcat 7.0.0 to 7.0.79 。开启puts方法时.</p>
+</li>
+<li>
+<p>cookie注入</p>
+</li>
+<li>
+<p>CRLF注入   %0d%0a<br>
+HTTP Header与HTTP Body是通过两个CRLF分隔， 而浏览器是根据这两个CRLF来取出HTTP 内容并显示出来。攻击者一旦能够控制HTTP 消息头中的字符，注入一些恶意的换行，这就能注入一些会话Cookie或者HTML代码。</p>
+</li>
+<li>
+<p>修改返回包状态码。跳过认证。</p>
+<blockquote>
+<p>http://ip/siteserver/cms/background_templateAdd.aspxPublishmentSystemID=1</p>
+</blockquote>
+<pre><code>  SiteServer CMS可通过修改返回状态码进入模板页面。
+  在模板添加页面。通过修改返回注册码、删除返回包的JS代码方式，注入一句话木马。即可通过菜刀访问ss</code></pre>
+</li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[00-SDL流程总览]]></title>
+        <id>https://liuyuan1002.github.io/post/00-sdl-liu-cheng-zong-lan/</id>
+        <link href="https://liuyuan1002.github.io/post/00-sdl-liu-cheng-zong-lan/">
+        </link>
+        <updated>2021-04-28T06:16:00.000Z</updated>
+        <content type="html"><![CDATA[<p>01 - 安全需求和规划（历史安全问题修复）<br>
+02 - 威胁建模<br>
+03 - 第三方组件合规性检查<br>
+04 - 危险函数代码自检<br>
+05 - 代码扫描<br>
+06 - 第三方组件合规性扫描<br>
+07 - 源码审计<br>
+08 - 渗透测试（安全需求、威胁分析复测；工具渗透测试；手工渗透测试）</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[05 - 代码扫描相关]]></title>
+        <id>https://liuyuan1002.github.io/post/dai-ma-sao-miao-xiang-guan/</id>
+        <link href="https://liuyuan1002.github.io/post/dai-ma-sao-miao-xiang-guan/">
+        </link>
+        <updated>2021-04-28T03:20:14.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="0x00-snoar-平台">0x00 snoar 平台</h1>
+<h1 id="0x01-扫描引擎">0x01 扫描引擎</h1>
+<h2 id="1-engine-x">1. engine-x</h2>
+<p>java\c\C++\python\PHP</p>
+<h2 id="2-flake8">2. flake8</h2>
+<p>python</p>
+<h2 id="3-pylints">3. pylints</h2>
+<p>python</p>
+<h2 id="4-eslint">4. eslint</h2>
+<p>JS</p>
+<h2 id="5-shellcheck">5. shellcheck</h2>
+<p>shell</p>
+<h2 id="6-luacheck">6. luacheck</h2>
+<h2 id="7-coverity">7. coverity</h2>
+<p>https://github.com/jenkinsci/coverity-plugin</p>
+<h2 id="8-foritiy">8. foritiy</h2>
+<p>java\Golang\JS\PHP\Python\C\C++</p>
 ]]></content>
     </entry>
 </feed>

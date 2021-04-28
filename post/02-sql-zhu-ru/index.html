@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>02 - SQL注入 | liuyuan1002</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://liuyuan1002.github.io/favicon.ico?v=1619592135177">
+<link rel="stylesheet" href="https://liuyuan1002.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="
+SQL 实战地址https://github.com/Audi-1/sqli-labs
+
+0x00 原理
+
+https://github.com/hongriSec/Web-Security-Attack/blob/master/Part..." />
+    <meta name="keywords" content="web安全" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://liuyuan1002.github.io">
+        <img src="https://liuyuan1002.github.io/images/avatar.png?v=1619592135177" class="site-logo">
+        <h1 class="site-title">liuyuan1002</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://liuyuan1002.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">02 - SQL注入</h2>
+            <div class="post-date">2021-04-28</div>
+            
+            <div class="post-content" v-pre>
+              <blockquote>
+<p>SQL 实战地址https://github.com/Audi-1/sqli-labs</p>
+</blockquote>
+<h2 id="0x00-原理">0x00 原理</h2>
+<blockquote>
+<p>https://github.com/hongriSec/Web-Security-Attack/blob/master/Part1/Day1/files/README.md</p>
+</blockquote>
+<p>都后台对用户输入的语句，进行拼接、并查询数据库。导致数据库内容泄露。</p>
+<h2 id="0x01-攻击方式">0x01 攻击方式</h2>
+<ol>
+<li>带内注入：<br>
+-基于错误的SQL语句<br>
+-基于联合的SQL  union all</li>
+<li>盲注。无法返回注入成功与否</li>
+<li>带外注入：</li>
+</ol>
+<h2 id="0x02-实战">0x02 实战</h2>
+<ol>
+<li>
+<p>https://www.cnblogs.com/qq3285862072/p/9439573.html<br>
+1）当输入单引号时，返回错误页面，则可能存在SQL注入<br>
+2）Url 地址中输入 http://xxx/abc.php?id= x and 1=1 页面依旧运行正常，继续进行下一步<br>
+Url 地址中继续输入 http://xxx/abc.php?id= x and 1=2 页面运行错误<br>
+则说明此 Sql 注入为数字型注入。<br>
+3）Url 地址中输入 http://xxx/abc.php?id= x' and '1'='1 页面运行正常，继续进行下一步。<br>
+Url 地址中继续输入 http://xxx/abc.php?id= x' and '1'='2 页面运行错误<br>
+1) or判断<br>
+5）xor判断<br>
+6） 减号判断<br>
+则说明此 Sql 注入为字符型注入。</p>
+</li>
+<li>
+<p>https://www.cnblogs.com/Qiuzhiyu/p/11666688.html</p>
+</li>
+<li>
+<p>搜索型  %</p>
+</li>
+<li>
+<p>盲注：<br>
+'&quot; or if(1<mark>1) sleep(5,1)<br>
+'&quot; or if(1</mark>2) sleep(5,1)</p>
+</li>
+<li>
+<p>注释<br>
+-- 这种后面有空格</p>
+<h1 id=""></h1>
+<p>/* */ 注释符号内内容</p>
+</li>
+<li>
+<p>insert注入： 报错测试 updatexml（）   extractValue（）</p>
+</li>
+<li>
+<p>update注入： updatexml（）</p>
+</li>
+<li>
+<p>delete注入： updatexml（）</p>
+</li>
+<li>
+<p>order by注入：  注入点 在代码order by之后  IF（1=1，name，price） 则存在注入。</p>
+</li>
+<li>
+<p>堆叠注入原理：  ；分号注入。后面后在自己的SQL语句</p>
+</li>
+<li>
+<p>union注入： 需要有回显，不然无法判断。</p>
+</li>
+<li>
+<p>宽字节注入：网站存在编码和数据库编码不一致。网站GBK、mysql unicode  。%df'  -&gt;%df'  -&gt;%df%5c' -&gt; 汉字'  达到闭合效果</p>
+</li>
+<li>
+<p>二次注入： 两个HTTP请求。第一个请求插入脏数据如1' 。第二个请求会把 1' 取出来时不做过滤，直接使用。<br>
+https://www.freebuf.com/articles/web/167089.html<br>
+注册 test'# 用户。修改密码时可以直接修改掉 test 密码</p>
+</li>
+</ol>
+<h2 id="0x03-防御">0x03  防御</h2>
+<ol>
+<li>过滤</li>
+<li>预编译</li>
+</ol>
+<h2 id="附实战环境搭建-sqlii-libs">附：实战环境搭建  sqlii-libs</h2>
+<pre><code> &quot;mysql_&quot;批量替换为&quot;mysqli_&quot;
+ mysqli_query($sql)   修改为    mysqli_query($con, $sql)
+ mysqli_select_db（）  参数顺序
+</code></pre>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://liuyuan1002.github.io/tag/Sy4C9tQAv/" class="tag">
+                    web安全
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://liuyuan1002.github.io/post/01-http-can-shu-an-quan/">
+                  <h3 class="post-title">
+                    01 - HTTP参数安全
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>
