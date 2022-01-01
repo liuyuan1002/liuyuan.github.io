@@ -2,16 +2,16 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://liuyuan1002.github.io</id>
     <title>liuyuan1002</title>
-    <updated>2021-04-28T09:51:39.693Z</updated>
+    <updated>2022-01-01T08:04:46.310Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://liuyuan1002.github.io"/>
     <link rel="self" href="https://liuyuan1002.github.io/atom.xml"/>
     <subtitle>学习笔记</subtitle>
     <logo>https://liuyuan1002.github.io/images/avatar.png</logo>
     <icon>https://liuyuan1002.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2021, liuyuan1002</rights>
+    <rights>All rights reserved 2022, liuyuan1002</rights>
     <entry>
-        <title type="html"><![CDATA[05 - 代码扫描相关]]></title>
+        <title type="html"><![CDATA[（SDL）05 - 代码扫描相关]]></title>
         <id>https://liuyuan1002.github.io/post/dai-ma-sao-miao-xiang-guan/</id>
         <link href="https://liuyuan1002.github.io/post/dai-ma-sao-miao-xiang-guan/">
         </link>
@@ -36,7 +36,7 @@
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[00 - SDL流程总览]]></title>
+        <title type="html"><![CDATA[（SDL）00 - SDL流程总览]]></title>
         <id>https://liuyuan1002.github.io/post/00-sdl-liu-cheng-zong-lan/</id>
         <link href="https://liuyuan1002.github.io/post/00-sdl-liu-cheng-zong-lan/">
         </link>
@@ -48,11 +48,14 @@
 05 - 代码扫描<br>
 06 - 第三方组件合规性扫描<br>
 07 - 源码审计<br>
-08 - 渗透测试（安全需求、威胁分析复测；工具渗透测试；手工渗透测试）</p>
+08 - 渗透测试（安全需求、威胁分析复测；工具渗透测试；手工渗透测试）<br>
+09 - 安全运维<br>
+10 - 应急响应<br>
+11 - 安全运营</p>
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[08 - URL重定向钓鱼]]></title>
+        <title type="html"><![CDATA[（web安全）08 - URL重定向钓鱼]]></title>
         <id>https://liuyuan1002.github.io/post/08-url-chong-ding-xiang-diao-yu/</id>
         <link href="https://liuyuan1002.github.io/post/08-url-chong-ding-xiang-diao-yu/">
         </link>
@@ -99,7 +102,7 @@
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[07 - XXE]]></title>
+        <title type="html"><![CDATA[（web安全）07 - XXE]]></title>
         <id>https://liuyuan1002.github.io/post/06-xxe/</id>
         <link href="https://liuyuan1002.github.io/post/06-xxe/">
         </link>
@@ -157,7 +160,7 @@ foo.bar.10.0.0.1.xip.io   resolves to   10.0.0.1<br>
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[06 - SSRF]]></title>
+        <title type="html"><![CDATA[（web安全）06 - SSRF]]></title>
         <id>https://liuyuan1002.github.io/post/06-ssrf/</id>
         <link href="https://liuyuan1002.github.io/post/06-ssrf/">
         </link>
@@ -196,7 +199,7 @@ foo.bar.10.0.0.1.xip.io   resolves to   10.0.0.1<br>
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[05 - CSRF]]></title>
+        <title type="html"><![CDATA[（web安全）05 - CSRF]]></title>
         <id>https://liuyuan1002.github.io/post/05-csrf/</id>
         <link href="https://liuyuan1002.github.io/post/05-csrf/">
         </link>
@@ -209,7 +212,7 @@ foo.bar.10.0.0.1.xip.io   resolves to   10.0.0.1<br>
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[04 - JSONP 劫持跨域]]></title>
+        <title type="html"><![CDATA[（web安全）04 - JSONP 劫持跨域]]></title>
         <id>https://liuyuan1002.github.io/post/04-jsonp-jie-chi-kua-yu/</id>
         <link href="https://liuyuan1002.github.io/post/04-jsonp-jie-chi-kua-yu/">
         </link>
@@ -228,7 +231,7 @@ Access-Control-Allow-Origin: reports.verysecurebank.ro:</li>
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[03 - XSS（跨站脚本漏洞）]]></title>
+        <title type="html"><![CDATA[（web安全）03 - XSS（跨站脚本漏洞）]]></title>
         <id>https://liuyuan1002.github.io/post/03-xsskua-zhan-jiao-ben-lou-dong/</id>
         <link href="https://liuyuan1002.github.io/post/03-xsskua-zhan-jiao-ben-lou-dong/">
         </link>
@@ -351,7 +354,7 @@ XSS编码：</p>
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[02 - SQL注入]]></title>
+        <title type="html"><![CDATA[（web安全）02 - SQL注入]]></title>
         <id>https://liuyuan1002.github.io/post/02-sql-zhu-ru/</id>
         <link href="https://liuyuan1002.github.io/post/02-sql-zhu-ru/">
         </link>
@@ -444,7 +447,7 @@ https://www.freebuf.com/articles/web/167089.html<br>
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[01 - HTTP参数安全]]></title>
+        <title type="html"><![CDATA[（web安全）01 - HTTP参数安全]]></title>
         <id>https://liuyuan1002.github.io/post/01-http-can-shu-an-quan/</id>
         <link href="https://liuyuan1002.github.io/post/01-http-can-shu-an-quan/">
         </link>
